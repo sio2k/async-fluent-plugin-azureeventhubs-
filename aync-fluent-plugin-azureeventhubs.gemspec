@@ -3,10 +3,10 @@ lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
 Gem::Specification.new do |spec|
-  spec.name          = "fluent-plugin-azureeventhubs"
-  spec.version       = "0.0.6"
-  spec.authors       = ["Hidemasa Togashi", "Toddy Mladenov", "Justin Seely"]
-  spec.email         = ["togachiro@gmail.com", "toddysm@gmail.com"]
+  spec.name          = "async-fluent-plugin-azureeventhubs"
+  spec.version       = "0.0.1"
+  spec.authors       = ["Sandeep Kotha"]
+  spec.email         = ["sandeep.kotha@live.com"]
   spec.summary       = "Fluentd output plugin for Azure Event Hubs"
   spec.description   = "Fluentd output plugin for Azure Event Hubs"
   spec.homepage      = "https://github.com/htgc/fluent-plugin-azureeventhubs"
