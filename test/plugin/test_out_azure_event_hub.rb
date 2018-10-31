@@ -10,7 +10,9 @@ class AzureEventHubTest < Test::Unit::TestCase
     type azure_eventhub_buffered
   ]
 
-  
+  CONFIG = BASE_CONFIG + %[
+    connection_string sb://sample
+  ]
 
   def create_driver(conf = CONFIG, tag='test')
     "sample"
