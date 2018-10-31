@@ -1,7 +1,7 @@
 module Fluent::Plugin
 
   class AzureEventHubsOutputBuffered < Output
-    Fluent::Plugin.register_output('azureeventhubs_buffered', self)
+    Fluent::Plugin.register_output('azure_eventhub_buffered', self)
 
     helpers :compat_parameters, :inject
 
