@@ -3,7 +3,7 @@ class AzureEventHubsHttpSender
   def initialize(connection_string, hub_name, expiry=3600,proxy_addr='',proxy_port=3128,open_timeout=60,read_timeout=60)
     require 'openssl'
     require 'base64'
-    require 'net/http'
+    require 'unirest'
     require 'json'
     require 'cgi'
     require 'time'
@@ -56,19 +56,12 @@ class AzureEventHubsHttpSender
     if not properties.nil?
       headers = headers.merge(properties)
     end
-    if (@proxy_addr.to_s.empty?)
-    	https = Net::HTTP.new(@uri.host, @uri.port)
-        https.open_timeout = @open_timeout
-        https.read_timeout = @read_timeout
-    else
-    	https = Net::HTTP.new(@uri.host, @uri.port,@proxy_addr,@proxy_port)
-        https.open_timeout = @open_timeout
-        https.read_timeout = @read_timeout
-    end
-    https.use_ssl = true
-    req = Net::HTTP::Post.new(@uri.request_uri, headers)
-    req.body = payload.to_json
-    res = https.request(req)
-    rescue Timeout::Error, Errno::EINVAL, Errno::ECONNRESET, EOFError, Errno::ETIMEDOUT, Net::HTTPBadResponse, Net::HTTPHeaderSyntaxError, Net::ProtocolError => e
+    Unirest.post @uri.request_uri, 
+                        headers:{ 'Content-Type' => 'application/atom+xml;type=entry;charset=utf-8',
+                            'Authorization' => token
+                        }, 
+                        parameters:payload {|response|
+    response.code 
+}   
   end
 end
