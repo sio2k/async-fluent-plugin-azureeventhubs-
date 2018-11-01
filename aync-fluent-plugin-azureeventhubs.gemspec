@@ -15,7 +15,7 @@ Gem::Specification.new do |spec|
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ["lib"]
   spec.name          = "sk-fluent-plugin-azureeventhubs"
-  spec.version       = "0.0.14"
+  spec.version       = "0.0.15"
   spec.required_ruby_version = ">= 2.1.0"
 
   spec.add_development_dependency "bundler", "~> 1.7"
