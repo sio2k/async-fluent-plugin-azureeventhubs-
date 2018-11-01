@@ -1,5 +1,7 @@
-class Fluent::AzureEventHubsOutputBuffered < Fluent::BufferedOutput
-    Fluent::Plugin.register_output('azure_eventhub_buffered', self)
+module Fluent::Plugin
+
+  class AzureEventHubsOutputBuffered < Output
+    Fluent::Plugin.register_output('azureeventhubs_buffered', self)
 
     helpers :compat_parameters, :inject
 
@@ -47,7 +49,7 @@ class Fluent::AzureEventHubsOutputBuffered < Fluent::BufferedOutput
 
     def write(chunk)
       chunk.msgpack_each { |tag, time, record|
-        p record.to_s
+
         if @include_tag
           record['tag'] = tag
         end
