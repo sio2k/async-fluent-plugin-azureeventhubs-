@@ -1,3 +1,8 @@
+require "fluent/plugin/output"
+require 'fluent/output'
+require 'fluent/output_chain'
+require 'fluent/plugin/buffer'
+
 module Fluent::Plugin
 
   class AzureEventHubsOutputBuffered < Fluent::BufferedOutput
@@ -23,6 +28,22 @@ module Fluent::Plugin
     config_section :buffer do
       config_set_default :@type, DEFAULT_BUFFER_TYPE
       config_set_default :chunk_keys, ['tag']
+    end
+
+    def initialize
+      super
+    end
+
+    def start
+      super
+    end
+
+    def shutdown
+      super
+    end
+
+    def prefer_buffered_processing
+      true
     end
 
     def configure(conf)
