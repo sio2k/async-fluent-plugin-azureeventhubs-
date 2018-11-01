@@ -25,10 +25,6 @@ module Fluent::Plugin
     config_param :read_timeout, :integer,:default => 60
     config_param :message_properties, :hash, :default => nil
 
-    config_section :buffer do
-      config_set_default :@type, DEFAULT_BUFFER_TYPE
-      config_set_default :chunk_keys, ['tag']
-    end
 
     def initialize
       super
