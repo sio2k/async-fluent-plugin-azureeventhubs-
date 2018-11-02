@@ -49,7 +49,7 @@ class AzureEventHubsHttpSender
 
   def send_w_properties(payload, properties)
     token = generate_sas_token(@uri.to_s)
-    Unirest.post "#{@uri}?timeout=10&api-version=2014-01",
+    Unirest.post "#{@uri.to_s}?timeout=10&api-version=2014-01",
                         headers:{ 'Content-Type' => 'application/atom+xml;type=entry;charset=utf-8',
                             'Authorization' => token
                         },
