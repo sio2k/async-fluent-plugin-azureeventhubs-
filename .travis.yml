@@ -9,6 +9,7 @@ rvm:
   - ruby-head
 
 before_install:
+  - gem install bundler
   - gem update --system
 
 script:

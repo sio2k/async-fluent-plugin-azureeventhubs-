@@ -1,6 +1,11 @@
+require "fluent/plugin/output"
+require 'fluent/output'
+require 'fluent/output_chain'
+require 'fluent/plugin/buffer'
+
 module Fluent::Plugin
 
-  class AzureEventHubsOutputBuffered < Output
+  class AzureEventHubsOutputBuffered < Fluent::BufferedOutput
     Fluent::Plugin.register_output('azureeventhubs_buffered', self)
 
     helpers :compat_parameters, :inject
@@ -20,9 +25,21 @@ module Fluent::Plugin
     config_param :read_timeout, :integer,:default => 60
     config_param :message_properties, :hash, :default => nil
 
-    config_section :buffer do
-      config_set_default :@type, DEFAULT_BUFFER_TYPE
-      config_set_default :chunk_keys, ['tag']
+
+    def initialize
+      super
+    end
+
+    def start
+      super
+    end
+
+    def shutdown
+      super
+    end
+
+    def prefer_buffered_processing
+      true
     end
 
     def configure(conf)
@@ -35,7 +52,7 @@ module Fluent::Plugin
         require_relative 'azureeventhubs/http'
         @sender = AzureEventHubsHttpSender.new(@connection_string, @hub_name, @expiry_interval,@proxy_addr,@proxy_port,@open_timeout,@read_timeout)
       end
-      raise Fluent::ConfigError, "'tag' in chunk_keys is required." if not @chunk_key_tag
+      # raise Fluent::ConfigError, "'tag' in chunk_keys is required." if not @chunk_key_tag
     end
 
     def format(tag, time, record)
