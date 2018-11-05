@@ -48,12 +48,12 @@ class AzureEventHubsHttpSender
   end
 
   def send_w_properties(payload, properties)
-    token = generate_sas_token(@uri.to_s)    
-    Unirest.post "#{@uri.to_s}?timeout=10&api-version=2014-01", 
+    token = generate_sas_token(@uri.to_s)
+    Unirest.post "#{@uri}?timeout=10&api-version=2014-01",
                         headers:{ 'Content-Type' => 'application/atom+xml;type=entry;charset=utf-8',
                             'Authorization' => token
-                        }, 
-                        parameters: payload.to_s {|response| response.code }   
+                        },
+                        parameters: payload.to_s {|response| response.code }
     rescue Exception => e
       log.warn "Send exception occurred: #{e}"
       raise e
