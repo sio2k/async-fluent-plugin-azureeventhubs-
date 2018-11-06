@@ -63,7 +63,7 @@ module Fluent::Plugin
     end
 
     def write(chunk)
-      chunk.msgpack_each { |record|
+      chunk.msgpack_each { |tag, time, record|
         records = []
         records.push(record)
         @sender.send_w_properties(records, @message_properties)
