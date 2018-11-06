@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    sk-fluent-plugin-azureeventhubs (0.0.19)
+    sk-fluent-plugin-azureeventhubs (0.0.23)
       fluentd (>= 0.10.58, < 2)
       json (>= 2.1.0)
       rest-client (>= 2.0.2)
