@@ -11,4 +11,4 @@ Inspired by https://github.com/htgc/fluent-plugin-azureeventhubs
 - Snyk integration done
 - Travis build done
 - Buffered output done
-- revist rest client pending
+- rest client done
