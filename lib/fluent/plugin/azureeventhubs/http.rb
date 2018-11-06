@@ -3,7 +3,7 @@ class AzureEventHubsHttpSender
   def initialize(connection_string, hub_name, expiry=3600,proxy_addr='',proxy_port=3128,open_timeout=60,read_timeout=60)
     require 'openssl'
     require 'base64'
-    require 'unirest'
+    require 'rest-client'
     require 'json'
     require 'cgi'
     require 'time'
@@ -41,7 +41,6 @@ class AzureEventHubsHttpSender
     return token
   end
 
-  private :generate_sas_token
 
   def send(payload)
     send_w_properties(payload, nil)
@@ -49,13 +48,9 @@ class AzureEventHubsHttpSender
 
   def send_w_properties(payload, properties)
     token = generate_sas_token(@uri.to_s)
-    Unirest.post "#{@uri.to_s}?timeout=10&api-version=2014-01",
-                        headers:{ 'Content-Type' => 'application/atom+xml;type=entry;charset=utf-8',
+    RestClient.post("#{@uri.to_s}?timeout=10&api-version=2014-01", payload.to_json,
+                        { 'Content-Type' => 'application/atom+xml;type=entry;charset=utf-8',
                             'Authorization' => token
-                        },
-                        parameters: payload.to_s {|response| response.code }
-    rescue Exception => e
-      log.warn "Send exception occurred: #{e}"
-      raise e
+                        })
   end
 end
