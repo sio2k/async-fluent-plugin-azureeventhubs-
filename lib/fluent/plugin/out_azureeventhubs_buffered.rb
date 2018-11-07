@@ -23,6 +23,7 @@ module Fluent::Plugin
     config_param :proxy_port, :integer,:default => 3128
     config_param :open_timeout, :integer,:default => 60
     config_param :read_timeout, :integer,:default => 60
+    config_param :max_batch_size, :integer,:default => 100
     config_param :message_properties, :hash, :default => nil
 
 
@@ -63,10 +64,12 @@ module Fluent::Plugin
     end
 
     def write(chunk)
+      records = []
       chunk.msgpack_each { |tag, time, record|
-        records = []
         records.push(record)
-        @sender.send_w_properties(records, @message_properties)
+      }
+      records.each_slice(@max_batch_size).each { |group|
+        @sender.send_w_properties(group, @message_properties)
       }
     end
   end
